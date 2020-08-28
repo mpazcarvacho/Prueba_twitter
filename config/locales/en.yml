@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+
+en:
+  devise:
+    sessions:
+      user:
+        signed_in: 'Bienvenido!'
