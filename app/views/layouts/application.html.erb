@@ -13,8 +13,30 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <%= yield %>
+    <div class="row">
+      <div class="container-fluid">
+
+        <%= render "shared/navbar"%>
+
+        <%# Alertas %>
+        <% if notice %>
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Información</h4>
+            <p><%= notice %></p>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Atención</h4>
+            <p><%= alert %></p>
+          </div>
+        <% end %>
+        
+        <%= yield %>
+
+      </div>
     </div>
   </body>
 </html>
