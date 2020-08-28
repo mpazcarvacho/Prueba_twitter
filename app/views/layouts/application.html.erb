@@ -14,7 +14,7 @@
 
   <body>
     <div class="row">
-      <div class="container-fluid">
+      <div class="container">
 
         <%= render "shared/navbar"%>
 
@@ -28,13 +28,14 @@
         <% end %>
         <% if alert %>
           <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <button type="button" class="close" data-dismiss="notice">&times;</button>
             <h4>Atención</h4>
             <p><%= alert %></p>
           </div>
         <% end %>
-        
+
         <%= yield %>
+        
 
       </div>
     </div>
