@@ -14,7 +14,7 @@
   <div class="row">
     
     <div class="col-4 circle-pic">
-      <%=image_tag(current_user.pic_url, class:"rounded tweet-pic")%>
+      <%=image_tag(current_user.pic_url, class:"rounded tweet-pic my-auto")%>
     </div>
 
     <div class="col-8">
@@ -24,7 +24,7 @@
       </div>
 
       <div class="actions">
-        <%= form.submit "Tweet", class: "btn btn-success mt-5 float-right" %>
+        <%= form.submit "Tweet", class: "btn btn-success mt-2 float-right" %>
       </div>
     </div>
   </div>

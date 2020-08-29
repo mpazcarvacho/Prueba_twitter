@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :tweets
-  devise_for :users
-  get 'pages/index'
   root 'pages#index'
+  get 'pages/index'
+  resources :tweets do
+    post 'likes', to:"tweets#likes"
+    post 'retweets', to:"tweets#retweets"
+  end
+  devise_for :users
+  
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,15 +1,14 @@
 <h1>Pages#index</h1>
 
+<% if user_signed_in? %>
 <div class="row">
   <div class="col-8 border border-info mt-3 container p-2 my-2">
-    <% if user_signed_in? %>
       <%= render 'tweets/form', tweet: @tweet %>
-    <% end %>
   </div>
 </div>
+<% end %>
 
 <div class="row">
-  
   
   <% @tweets.each do |tweet| %>
     <div class="col-8 border border-info mt-3 container p-2 my-2">
@@ -18,11 +17,31 @@
           <%=image_tag(tweet.user.pic_url, class:"rounded tweet-pic")%>
         </div>
         <div class="col-8">
-          <h2><%=tweet.content%></h2>
+          <h6 class="username-tw"><%=tweet.user.to_s%></h6>
+          <h4><%=tweet.content%></h4>
         </div>
       </div>
       <div class="float-right mt-2 row mr-5">
-        <p><%=tweet.retweets.count%> retweets <%=tweet.likes.count%> likes</p>
+        <p>
+
+          <%=tweet.retweet_count%> 
+          <%if tweet.liked?(current_user)%>
+            <i class="fas fa-retweet retweeted"></i> <%# retweeted %>
+          <%else%>
+            <i class="fas fa-retweet"></i> 
+          <%end%>
+          <%=tweet.likes.count%> 
+          <%# Cambia el ícono de like en base a si user ha dado like al tweet o no %>
+          <%if tweet.liked?(current_user)%>
+            <%= link_to '<i class="fas fa-heart liked"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
+            
+          <%else%>
+            <%= link_to '<i class="far fa-heart"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
+            
+          <%end%>
+          
+        </p>
+        
       </div> 
     </div>
   <% end %>
