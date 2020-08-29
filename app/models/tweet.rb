@@ -5,6 +5,8 @@ class Tweet < ApplicationRecord
   has_many :users_liked, :through => :likes, :source => :user
   has_many :users_retweeted, :through => :retweets, :source => :user
 
-  paginates_per 50
+  paginates_per 1
+
+
 
 end

@@ -10,28 +10,22 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="row">
+    
+    <div class="col-4 circle-pic">
+      <%=image_tag(current_user.pic_url, class:"rounded tweet-pic")%>
+    </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+    <div class="col-8">
+      <div class="field form-group">
+        <%= form.label :content, "#{current_user.username} que estás pensando?"%>
+        <%= form.text_area :content, class:"form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :likes %>
-    <%= form.number_field :likes %>
-  </div>
-
-  <div class="field">
-    <%= form.label :retweets %>
-    <%= form.number_field :retweets %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+      <div class="actions">
+        <%= form.submit "Tweet", class: "btn btn-success mt-5 float-right" %>
+      </div>
+    </div>
   </div>
 <% end %>
