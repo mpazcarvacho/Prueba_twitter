@@ -1,11 +1,12 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
-  before_action :set_actual_tweet, only: [:likes]
+  before_action :set_actual_tweet, only: [:likes, :retweets]
 
   # GET /tweets
   # GET /tweets.json
   def index
     @tweets = Tweet.all
+    @retweets = Retweet.all
   end
 
   # Método para añadir likes
@@ -20,7 +21,7 @@ class TweetsController < ApplicationController
       end
       redirect_to root_path
     else
-      redirect_to root_path, alert: 'You must sign in to like tweets :)'
+      redirect_to root_path, alert: 'Debes iniciar sesión para dar likes :)'
     end
   end
 
@@ -28,13 +29,22 @@ class TweetsController < ApplicationController
     # Un usuario puede hacer un retweet haciendo click en la acción rt (retweet) de un tweet, esto
     # hará que ingrese un nuevo tweet con el mismo contenido pero además referenciando al
     # tweet original.
-
+    if user_signed_in?
+      tweet_retweeted = Tweet.create(content: @tweet.content, user_id: @tweet.user_id, rt_id: @tweet.id)
+      @tweet.retweet(current_user, tweet_retweeted)
+      redirect_to root_path
+    # Retweet.create(user: current_user, tweet: self)
+    else
+      redirect_to root_path, alert: 'Debes iniciar sesión para hacer retweets :)'
+    end
+    
   end
 
   # GET /tweets/1
   # GET /tweets/1.json
   def show
   end
+
 
   # GET /tweets/new
   def new
@@ -99,6 +109,10 @@ class TweetsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def tweet_params
       params.require(:tweet).permit(:content, :user_id, :likes, :retweets)
+    end
+
+    def set_retweet
+      @retweet = Retweet.where(tweet_id: :rt_id)
     end
 
   

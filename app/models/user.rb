@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :pic_url, presence: true
+  validates :pic_url, presence: true, format: URI::regexp(%w[http https])
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

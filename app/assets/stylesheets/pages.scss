@@ -33,12 +33,20 @@
 
 .logo{
   font-size: 30px;
+  font-family: 'Rubik', sans-serif;
 }
 
 body{
   background-color: snow;
+  padding-bottom: 100px;
 }
 
 .username-tw{
   color:darkgreen;
+}
+
+.footer{
+  height: 100px;
+  color: snow;
+  text-align: center;
 }
