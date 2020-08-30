@@ -11,15 +11,22 @@
 <div class="row">
   
   <% @tweets.each do |tweet| %>
-    <div class="col-8 border border-info mt-3 container p-2 my-2">
+    <div class="col-8 border border-info mt-3 container p-2 my-2 tweet-box">
       
       <%if tweet.retweeted?%>
         <div class="row">
-          <div class="col-2 font-weight-bold"><%=tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
-          <br>
+          <div class="col-2 font-weight-bold">
+            <%=tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
+            <br>
             <%=image_tag(tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
           </div>
           <div class="col-10">
+            <div class="row float-right pr-5">
+            <%# DATE %>
+              <span class="float-right">
+                <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
+              </span>
+            </div>
             <div class="row">
               <div class="col-1">
                 <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
@@ -33,13 +40,19 @@
         </div>
       <%else%>
       <%# INNER TWEET %>
-    
+      <div class="row float-right pr-5">
+        <%# DATE %>
+        <span class="float-right">
+          <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
+        </span>
+      </div>
       <div class="row">
         <div class="col-1">
           <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
         </div>
         <div class="col-11">
           <h6 class="username-tw"><%=tweet.user.to_s%></h6>
+            <br>
           <h4><%=tweet.content%></h4>
         </div>
       </div>

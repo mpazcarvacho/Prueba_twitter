@@ -1,24 +1,98 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @tweet.content %>
-</p>
+<div class="row">
+  
+  <div class="col-8 mt-3 container p-2 my-2">
+    <div class="row">
+      <div class="col-12 mt-3 container p-2 my-2 border border-info tweet-box">
+      <%if @tweet.retweeted?%>
+        <div class="row">
+          <div class="col-2 font-weight-bold">
+            <%=@tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
+            <br>
+            <%=image_tag(@tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
+          </div>
+          <div class="col-10">
+            <div class="row float-right pr-5">
+            <%# DATE %>
+              <span class="float-right">
+                <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(@tweet.created_at, Time.now), @tweet%>
+              </span>
+            </div>
+            <div class="row">
+              <div class="col-1">
+                <%=image_tag(@tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
+              </div>
+              <div class="col-11">
+                <h6 class="username-tw"><%=@tweet.user.to_s%></h6>
+                <h4><%=@tweet.content%></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      <%else%>
+      <%# INNER TWEET %>
+      <div class="row float-right pr-5">
+        <%# DATE %>
+        <span class="float-right">
+          <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(@tweet.created_at, Time.now), @tweet%>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-1">
+          <%=image_tag(@tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
+        </div>
+        <div class="col-11">
+          <h6 class="username-tw"><%=@tweet.user.to_s%></h6>
+            <br>
+          <h4><%=@tweet.content%></h4>
+        </div>
+      </div>
+      <%# END INNER TWEET %>
+      <% end %>
 
-<p>
-  <strong>User:</strong>
-  <%= @tweet.user %>
-</p>
+      <div class="float-right mt-2 row mr-5">
+        <p>
+          <%# RETWEETS %>
+          <%=@tweet.retweet_count%> 
+          <%if @tweet.retweeted?%>
+            <%= link_to '<i class="fas fa-retweet retweeted"></i>'.html_safe, tweet_retweets_path(@tweet), method: :post%>
+          <%else%>
+            <%= link_to '<i class="fas fa-retweet"></i>'.html_safe, tweet_retweets_path(@tweet), method: :post%>
+          <%end%>
 
-<p>
-  <strong>Likes:</strong>
-  <%= @tweet.likes %>
-</p>
+          <%# LIKES %>
+          <%=@tweet.likes.count%> 
+          <%# Cambia el ícono de like en base a si user ha dado like al tweet o no %>
+          <%if @tweet.liked?(current_user)%>
+            <%= link_to '<i class="fas fa-heart liked"></i>'.html_safe, tweet_likes_path(@tweet), method: :post%>
+          <%else%>
+            <%= link_to '<i class="far fa-heart"></i>'.html_safe, tweet_likes_path(@tweet), method: :post%>
+          <%end%>
+          
+        </p>
+        
+      </div>
+      </div>
+    </div>
+    <%# USERS WHO LIKED THE TWEET %>
+    <div class="row">
+      <br>
+      <%@tweet.users_liked.each do |user|%>
+          <%= image_tag (user.pic_url), class:"rounded-circle tweet-pic mx-2"%>
+      <% end %>
+      <%if @tweet.likes.count!=0%>
+        <span> les gustó este tweet.</span>
+      <%end%>
+      
+      
+    </div>
+    <br>
+    <br>
+    <br>
+    <h4><%= link_to "Atrás", root_path, class:"mt-5"%></h4>
+  </div>
+  
+</div>
 
-<p>
-  <strong>Retweets:</strong>
-  <%= @tweet.retweets %>
-</p>
 
-<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
-<%= link_to 'Back', tweets_path %>
+
