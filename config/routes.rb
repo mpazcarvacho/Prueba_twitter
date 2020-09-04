@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#index'
   get 'pages/index'
+  get 'users/user'
   resources :tweets do
     post 'likes', to:"tweets#likes"
     post 'retweets', to:"tweets#retweets"
