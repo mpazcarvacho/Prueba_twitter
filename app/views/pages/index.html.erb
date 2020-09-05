@@ -1,96 +1,113 @@
 
 
 <% if user_signed_in? %>
-<div class="row">
-  <div class="col-8 border border-info mt-3 container p-2 my-2">
-      <%= render 'tweets/form', tweet: @tweet %>
-  </div>
-</div>
-<% end %>
-
-<div class="row">
-  
-  <% @tweets.each do |tweet| %>
-    <div class="col-8 border border-info mt-3 container p-2 my-2 tweet-box">
-      
-      <%if tweet.retweeted?%>
-        <div class="row">
-          <div class="col-sm-auto font-weight-bold">
-            <%=tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
-            <br>
-            <%= image_tag(tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
-          </div>
-          <div class="col-10">
-            <div class="row float-right pr-5">
-            <%# DATE %>
-              <span class="float-right date">
-                <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
-              </span>
-            </div>
-            <div class="row">
-              <div class="col-sm-auto">
-                <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
-              </div>
-              <div class="col-8">
-              <%# link added to username to profile %>
-                <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>      
-                <h4><%=tweet.content%></h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      <%else%>
-      <%# INNER TWEET %>
-      <div class="row float-right pr-5">
-        <%# DATE %>
-        <span class="float-right">
-          <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
-        </span>
-      </div>
-      <div class="row">
-        <div class="col-sm-auto">
-          <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
-        </div>
-        <div class="col-lg-auto">
-          <%# link added to username to profile %>
-          <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>
-          
-          <br>
-          <h4><%=tweet.content%></h4>
-        </div>
-      </div>
-      <%# END INNER TWEET %>
-      <% end %>
-
-      <div class="float-right mt-2 row mr-5">
-        <p>
-          <%# RETWEETS %>
-          <%=tweet.retweet_count%> 
-          <%if tweet.retweeted?%>
-            <%= link_to '<i class="fas fa-retweet retweeted"></i>'.html_safe, tweet_retweets_path(tweet), method: :post%>
-          <%else%>
-            <%= link_to '<i class="fas fa-retweet"></i>'.html_safe, tweet_retweets_path(tweet), method: :post%>
-          <%end%>
-
-          <%# LIKES %>
-          <%=tweet.likes.count%> 
-          <%# Cambia el ícono de like en base a si user ha dado like al tweet o no %>
-          <%if tweet.liked?(current_user)%>
-            <%= link_to '<i class="fas fa-heart liked"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
-          <%else%>
-            <%= link_to '<i class="far fa-heart"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
-          <%end%>
-          
-        </p>
-        
-      </div> 
+  <div class="row">
+    <div class="col-8 border border-info mt-3 container p-2 my-2">
+        <%= render 'tweets/form', tweet: @tweet %>
     </div>
-  <% end %>
-  
-</div>
-
-<div class="row mt-5 mx-auto text-center">
-  <div class= "col-12">
-    <%# <%= paginate @tweets%>
-    <%= link_to_next_page @tweets, "Mostrar más"%>
   </div>
+
+
+  <div class="row">
+    
+    <% @tweets.each do |tweet| %>
+      <div class="col-8 border border-info mt-3 container p-2 my-2 tweet-box">
+        
+        <%if tweet.retweeted?%>
+          <div class="row">
+            <div class="col-sm-auto font-weight-bold">
+              <%=tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
+              <br>
+              <%= image_tag(tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
+            </div>
+            <div class="col-10">
+              <div class="row float-right pr-5">
+              <%# DATE %>
+                <span class="float-right date">
+                  <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
+                </span>
+              </div>
+              <div class="row">
+                <div class="col-sm-auto">
+                  <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
+                </div>
+                <div class="col-8">
+                <%# link added to username to profile %>
+                  <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>      
+                  <h4><%=tweet.content%></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%else%>
+        <%# INNER TWEET %>
+        <div class="row float-right pr-5">
+          <%# DATE %>
+          <span class="float-right">
+            <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
+          </span>
+        </div>
+        <div class="row">
+          <div class="col-sm-auto">
+            <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
+          </div>
+          <div class="col-lg-auto">
+            <%# link added to username to profile %>
+            <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>
+            
+            <br>
+            <h4><%=tweet.content%></h4>
+          </div>
+        </div>
+        <%# END INNER TWEET %>
+        <% end %>
+
+        <div class="float-right mt-2 row mr-5">
+          <p>
+            <%# RETWEETS %>
+            <%=tweet.retweet_count%> 
+            <%if tweet.retweeted?%>
+              <%= link_to '<i class="fas fa-retweet retweeted"></i>'.html_safe, tweet_retweets_path(tweet), method: :post%>
+            <%else%>
+              <%= link_to '<i class="fas fa-retweet"></i>'.html_safe, tweet_retweets_path(tweet), method: :post%>
+            <%end%>
+
+            <%# LIKES %>
+            <%=tweet.likes.count%> 
+            <%# Cambia el ícono de like en base a si user ha dado like al tweet o no %>
+            <%if tweet.liked?(current_user)%>
+              <%= link_to '<i class="fas fa-heart liked"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
+            <%else%>
+              <%= link_to '<i class="far fa-heart"></i>'.html_safe, tweet_likes_path(tweet), method: :post%>
+            <%end%>
+            
+          </p>
+          
+        </div> 
+      </div>
+    <% end %>
+    
+  </div>
+
+  <div class="row mt-5 mx-auto text-center">
+    <div class= "col-12">
+      <%# <%= paginate @tweets%>
+      <%= link_to_next_page @tweets, "Mostrar más"%>
+    </div>
+  </div>
+
+<%else%>
+  <div class= "container">
+    <div class="row m-5">
+      <h1> Bienvenido! Debes iniciar sesión o registrarte para acceder Twitty :) </h1>
+    </div>
+    <div class="row m-5">
+      <div class="col-md">
+        <%= link_to 'Iniciar Sesión', new_user_session_path, class: "btn btn-success"%>
+      </div>
+      <div class="col-md">
+        <%= link_to 'Registrarse', new_user_registration_path, class: "btn btn-success"%>
+      </div>
+    </div>
+  </div>
+<% end %>
