@@ -23,9 +23,15 @@
       
     </ul>
     <%# SEARCH BUTTON ADDED %>
-    <form class="form-inline my-2 my-lg-0">
+    <%# <form class="form-inline my-2 my-lg-0">
+
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> %>
+
+    <%= form_tag(users_path, method: 'get', class: 'navbar-form navbar-right form-inline my-2 my-lg-0') do %>
+      <%= search_field_tag 'search', nil, class: 'form-control mr-sm-2', placeholder: 'Usuario'  %>
+      <%= submit_tag "Buscar", class: 'btn btn-success my-2 my-sm-0', :name => nil %>
+    <% end %>
   </div>
 </nav>

@@ -24,7 +24,7 @@ class FriendsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:id, :username, :pic_url)
+    params.require(:user).permit(:id)
   end
 
 end

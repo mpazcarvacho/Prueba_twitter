@@ -1,0 +1,19 @@
+<div class="container">
+
+  <% if @users.any?%>
+    <h1 class="mt-5">Resultados encontrados:</h1>
+    <% @users.each do |user|%>
+      <div class="row mt-3">
+        <div class="col-sm-auto">
+          <%=image_tag(user.pic_url, class:"rounded-circle tweet-pic")%>
+        </div>
+        <div class= "col-md-auto">
+          <%= link_to user.username, user_path(user.id) %>
+        </div>
+      </div>
+    <% end %>
+
+  <%else%>
+    <h1 class="mt-5">No se encontraron resultados :( </h1>
+  <%end%>
+</div>
