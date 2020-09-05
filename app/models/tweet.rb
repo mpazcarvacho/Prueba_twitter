@@ -13,6 +13,8 @@ class Tweet < ApplicationRecord
   
   scope :tweets_for_me, -> (user){ where(user_id: user.users_followed)}
 
+   
+
   def liked?(user)
     if self.users_liked.include?(user)
       true

@@ -1,3 +1,5 @@
+# MODIFICATIONS MADE TO ACTIVE ADMIN USER CONFIG FROM https://stackoverflow.com/questions/8360787/rails-3-can-active-admin-use-an-existing-user-model
+
 ActiveAdmin.setup do |config|
   # == Site Title
   #
@@ -54,7 +56,8 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # within the application controller.
-  # config.authentication_method = :authenticate_admin_user!
+  #método modificado para no sobreescribir modelo user
+  config.authentication_method = :authenticate_admin!
 
   # == User Authorization
   #
@@ -91,7 +94,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
-  # config.current_user_method = :current_admin_user
+  config.current_user_method = :current_user
 
   # == Logging Out
   #
@@ -103,13 +106,15 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_admin_user_session_path
+  #ex destroy_admin_user_session_path; modificado
+  config.logout_link_path = :destroy_user_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
   #
   # Default:
   # config.logout_link_method = :get
+  config.logout_link_method = :get
 
   # == Root
   #
