@@ -8,13 +8,25 @@
     <div class="col-10 mt-5">
       <div class="row">
         <h1>Perfil de <%= @user %></h1>
+        <%# <%="current #{current_user} || @user.id #{@user.id}"%>
       </div>
       <div class="row mt-5">
         <%# AQUI DEBIESE AÑADIR VALIDACIÓN PARA SABER SI YA ESTOY SIGUIENDO A ESTA CUENTA %>
-        <%if current_user.follows_user?(@user_id) && user_signed_in? %>
-          <%=link_to "Dejar de seguir", unfollow_path(@user.id), class:"btn btn-danger"%>
+        <%if user_signed_in? %>
+          
+          <%if current_user == @user %>
+            <%# NO hay botón, no se puede seguir a si mismo %>
+          <%else%>
+            <%if current_user.follows_user?(current_user, @user.id) %>
+            
+              <%=link_to "Dejar de seguir", unfollow_path(@user.id), method: :delete, class:"btn btn-danger"%>
+            <%else%>
+              
+              <%=link_to "Seguir", follow_path(@user.id), method: :post, class:"btn btn-success"%>
+            <%end%>
+          <%end%>
         <%else%>
-          <%=link_to "Seguir", follow_path(@user.id), class:"btn btn-success"%>
+          <%= link_to "Inicia sesión para seguir a #{@user}" , new_user_session_path %>
         <%end%>
       </div>
     </div>
@@ -28,3 +40,4 @@
 cargar últimos tweets?? 
 %>
 
+<%# @follows_user?(@user_id) && user_signed_in %>

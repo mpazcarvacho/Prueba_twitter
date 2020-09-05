@@ -12,14 +12,15 @@ class User < ApplicationRecord
   has_many :retweeted_tweets, :through => :retweets, :source => :tweet
   has_many :friends
   
+  
 
   def to_s
     username
   end
 
-  def follows_user?(user_id)
+  def follows_user?(current_user, user_id)
 
-    all_relations = Friends.where(user_id: current_user, friend_id: user_id)
+    all_relations = Friend.where(user_id: current_user.id, friend_id: user_id)
 
     if all_relations.any?
       true

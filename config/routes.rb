@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   
   resources :users
 
-  post 'follow/:user_id', to: 'users#follow', as: 'follow'
-  delete 'unfollow/:user_id', to: 'users#unfollow', as: 'unfollow'
+  post 'follow/:user_id', to: 'friends#follow', as: 'follow'
+  delete 'unfollow/:user_id', to: 'friends#unfollow', as: 'unfollow'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

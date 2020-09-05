@@ -13,11 +13,11 @@
   
   <div class="row">
     
-    <div class="col-4 circle-pic">
-      <%=image_tag(current_user.pic_url, class:"rounded tweet-pic my-auto")%>
+    <div class="col-sm-auto">
+      <%=image_tag(current_user.pic_url, class:"rounded-circle tweet-pic my-auto")%>
     </div>
 
-    <div class="col-8">
+    <div class="col-10">
       <div class="field form-group">
         <%= form.label :content, "#{current_user.username} que estás pensando?"%>
         <%= form.text_area :content, class:"form-control" %>

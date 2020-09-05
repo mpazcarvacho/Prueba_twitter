@@ -15,23 +15,23 @@
       
       <%if tweet.retweeted?%>
         <div class="row">
-          <div class="col-2 font-weight-bold">
+          <div class="col-sm-auto font-weight-bold">
             <%=tweet.retweeted_by%> <i class="fas fa-retweet retweeted"></i>
             <br>
-            <%=image_tag(tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
+            <%= image_tag(tweet.retweeted_user_pic, class:"rounded-circle tweet-pic")%>
           </div>
           <div class="col-10">
             <div class="row float-right pr-5">
             <%# DATE %>
-              <span class="float-right">
+              <span class="float-right date">
                 <%= link_to '<i class="fas fa-history"></i>'.html_safe+" "+distance_of_time_in_words(tweet.created_at, Time.now), tweet%>
               </span>
             </div>
             <div class="row">
-              <div class="col-1">
+              <div class="col-sm-auto">
                 <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
               </div>
-              <div class="col-11">
+              <div class="col-8">
               <%# link added to username to profile %>
                 <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>      
                 <h4><%=tweet.content%></h4>
@@ -48,10 +48,10 @@
         </span>
       </div>
       <div class="row">
-        <div class="col-1">
+        <div class="col-sm-auto">
           <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
         </div>
-        <div class="col-11">
+        <div class="col-lg-auto">
           <%# link added to username to profile %>
           <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>
           
