@@ -17,4 +17,17 @@ class User < ApplicationRecord
     username
   end
 
+  def follows_user?(user_id)
+
+    all_relations = Friends.where(user_id: current_user, friend_id: user_id)
+
+    if all_relations.any?
+      true
+    else
+      false
+    end
+
+  end
+
+
 end

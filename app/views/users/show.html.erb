@@ -1,9 +1,30 @@
-<h1>VISTA USUARIO</h1>
+<%# USER'S PROFILE VIEW %>
 
+<div class="coontainer">
+  <div class="row">
+    <div class="col-2 pl-5 mt-5">
+      <%=image_tag(@user.pic_url, class:"rounded-circle profile-pic")%>
+    </div>
+    <div class="col-10 mt-5">
+      <div class="row">
+        <h1>Perfil de <%= @user %></h1>
+      </div>
+      <div class="row mt-5">
+        <%# AQUI DEBIESE AÑADIR VALIDACIÓN PARA SABER SI YA ESTOY SIGUIENDO A ESTA CUENTA %>
+        <%if current_user.follows_user?(@user_id) && user_signed_in? %>
+          <%=link_to "Dejar de seguir", unfollow_path(@user.id), class:"btn btn-danger"%>
+        <%else%>
+          <%=link_to "Seguir", follow_path(@user.id), class:"btn btn-success"%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row ml-5 text-center">
+    <h4><%= link_to "Atrás", root_path, class:"mt-5"%></h4>
+  </div>
+<div>
 <%# añadir foto, nombre perfil, botón follow (if clicked unfollow)
 cargar últimos tweets?? 
-añadir vista follow??
 %>
-<%= current_user %>
 
-z
