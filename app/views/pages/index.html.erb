@@ -32,7 +32,8 @@
                 <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
               </div>
               <div class="col-11">
-                <h6 class="username-tw"><%=tweet.user.to_s%></h6>
+              <%# link added to username to profile %>
+                <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>      
                 <h4><%=tweet.content%></h4>
               </div>
             </div>
@@ -51,8 +52,10 @@
           <%=image_tag(tweet.user.pic_url, class:"rounded-circle tweet-pic")%>
         </div>
         <div class="col-11">
-          <h6 class="username-tw"><%=tweet.user.to_s%></h6>
-            <br>
+          <%# link added to username to profile %>
+          <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>
+          
+          <br>
           <h4><%=tweet.content%></h4>
         </div>
       </div>
