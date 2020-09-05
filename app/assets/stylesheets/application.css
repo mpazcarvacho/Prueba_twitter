@@ -10,7 +10,9 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- * 
+ *= stub "active_admin"
  *= require_tree .
  *= require_self
  */
+
+ /* ACtive_admin css error; move css to vendor folder does not work in rails 5.2 https://stackoverflow.com/questions/19304681/my-css-file-is-overridden-due-to-activeadmin */

@@ -7,7 +7,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where("username like ?", "%#{params[:search]}%")
+    # if params[:search].any?
+      @users = User.where("username like ?", "%#{params[:search]}%")
+    # else
+    #   @users = User.all
+    # end
   end
 
   private

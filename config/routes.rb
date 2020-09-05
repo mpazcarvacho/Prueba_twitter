@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  ActiveAdmin.routes(self)
   root 'pages#index'
   get 'pages/index'
   
