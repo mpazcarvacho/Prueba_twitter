@@ -45,7 +45,7 @@
                 <div class="col-8">
                 <%# link added to username to profile %>
                   <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>      
-                  <h4><%=tweet.content%></h4>
+                  <h4><%=tweet.content.html_safe%></h4>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@
             <h6 class="username-tw"><%= link_to tweet.user.to_s, user_path(tweet.user.id) %></h6>
             
             <br>
-            <h4><%=tweet.content%></h4>
+            <h4><%=tweet.content.html_safe%></h4>
           </div>
         </div>
         <%# END INNER TWEET %>

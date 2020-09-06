@@ -11,7 +11,12 @@ class Tweet < ApplicationRecord
   
 
   paginates_per 50
-  
+
+  # para hacer escape a hashtag y pasarlo como params https://ruby-doc.org/stdlib-2.5.3/libdoc/uri/rdoc/URI/Escape.html
+  require 'uri' 
+  # Para q funcione la ruta desde el modelo
+  include ActionView::Helpers::UrlHelper
+
   scope :tweets_for_me, -> (user){ where(user_id: user.users_followed<<user.id)}
   #Añadí user.id (current_user) directamente en users_followed para que el usuario pueda ver sus propios tweets
   
@@ -26,16 +31,38 @@ class Tweet < ApplicationRecord
 
   def hashtags
     # array con hashtags. añadir each por que o si no hace un sólo split
-    @content.split(" ").each do |word| 
+    hashtag_array = []
+    self.content.split(" ").each do |word| 
       # https://apidock.com/ruby/String/start_with%3F
       if word.start_with?('#')
+        converted_word = URI.escape(word)
         # Hashtag, tiene q ser link
         # concatenate root_path to search?? https://stackoverflow.com/questions/8052532/rails-3-1-path-url-to-file-in-public-directory
-        word = link_to(word, root_path+"?utf8=✓&search_tweets=#{word}&commit=Buscar+Tweets")
+        # https://stackoverflow.com/questions/55152502/passing-symbol-to-params-hash-in-rails reemplazar hastag por %23
+        #error con root_path https://stackoverflow.com/questions/3447160/accessing-rails-restful-routes-in-the-model
+        word_link = link_to(word, Rails.application.routes.url_helpers.root_path+"?utf8=✓&search_tweets=#{converted_word}&commit=Buscar+Tweets")
+        # intento. añadir html_safe en vista!!
+        # word_link = link_to(word, Rails.application.routes.url_helpers.root_path+"?utf8=✓&search_tweets=#{converted_word}&commit=Buscar+Tweets".html_safe)
       else
+        word_link = word
+      end
+      hashtag_array<<word_link
+    end
 
+    hashtag_array.each_with_index do |word_link, index|
+      if index == 0
+        # primer elemento
+        self.content = "#{word_link} "
+      elsif index == hashtag_array.size - 1
+        #último elemento
+        self.content+=word_link
+      else
+        self.content+="#{word_link} "
       end
     end
+
+    # https://stackoverflow.com/questions/4000713/tell-the-end-of-a-each-loop-in-ruby
+
   end
 
   def liked?(user)

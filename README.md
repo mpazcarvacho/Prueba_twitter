@@ -1,5 +1,9 @@
 # README
 
+ADMIN USER: admin@twitty.com
+ADMIN PASS: adminpass
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
