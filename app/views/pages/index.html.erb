@@ -1,6 +1,17 @@
 
 
 <% if user_signed_in? %>
+  <%# BUSCADOR DE TWEETS %>
+  <div class="row">
+    <div class="col-8 border border-info mt-3 container p-2 my-2">
+      <%= form_tag(root_path, method: :get) do%>
+        <%= text_field_tag(:search_tweets, "", class:"form-control mt-4", placeholder: "Buscar Tweets")%>
+        <%= submit_tag("Buscar Tweets", class: "btn  btn-success float-right mt-4")%>
+      <% end %>
+    </div>
+  </div>
+  
+  
   <div class="row">
     <div class="col-8 border border-info mt-3 container p-2 my-2">
         <%= render 'tweets/form', tweet: @tweet %>

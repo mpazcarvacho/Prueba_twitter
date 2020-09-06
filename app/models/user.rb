@@ -5,17 +5,18 @@ class User < ApplicationRecord
   validates :pic_url, format: URI::regexp(%w[http https])
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :tweets
-  has_many :likes
-  has_many :retweets
-  has_many :liked_tweets, :through => :likes, :source => :tweet
-  has_many :retweeted_tweets, :through => :retweets, :source => :tweet
-  has_many :friends
+  has_many :tweets, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :retweets, dependent: :destroy
+  has_many :liked_tweets, :through => :likes, :source => :tweet, dependent: :destroy
+  has_many :retweeted_tweets, :through => :retweets, :source => :tweet, dependent: :destroy
+  has_many :friends, dependent: :destroy
   
   
 
   def to_s
-    username
+    username.capitalize
+    # https://apidock.com/ruby/v2_5_5/String/capitalize
   end
 
   def follows_user?(current_user, user_id)
@@ -42,5 +43,21 @@ class User < ApplicationRecord
 
   end
   
+  # Métodos para active admin dashboard
+  def following_count
+    Friend.where(user: self).count
+  end
+
+  def total_tweets
+    self.tweets.count
+  end
+    
+  def total_likes
+    self.likes.count
+  end
+
+  def total_retweets
+    self.retweets.count
+  end
 
 end

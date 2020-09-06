@@ -1,5 +1,6 @@
 class Tweet < ApplicationRecord
-
+  # after_save :hashtags no puede ser after_save para que se pase a la db
+  before_save :hashtags
   validates :content, presence: true
 
   belongs_to :user
@@ -11,9 +12,31 @@ class Tweet < ApplicationRecord
 
   paginates_per 50
   
-  scope :tweets_for_me, -> (user){ where(user_id: user.users_followed)}
+  scope :tweets_for_me, -> (user){ where(user_id: user.users_followed<<user.id)}
+  #Añadí user.id (current_user) directamente en users_followed para que el usuario pueda ver sus propios tweets
+  
+  # Hashtags? https://stackoverflow.com/questions/16308234/how-to-extract-hashtags-and-display-them-groups-by-descending-dates-ruby-on-ra
+  # Nota: La forma más sencilla de crear los hashtags es: 1) Convertir el contenido del tweet en
+  # un array, donde el espacio entre palabra y palabra puede ser el elemento de separación. LISTO 2)
+  # Iterar el array del contenido y revisar si en cada palabra existe un  ; si existe se crea el link
+  # con su correspondiente URL y texto, luego el link se retorna al mismo array; en el caso de
+  # que no exista el numeral ( ) se retorna al array la palabra completa. 3) Una vez que hemos
+  # revisado el array e insertado los links se vuelve a unir el array para convertirlo en un string.
+  # 4) Ese string se lo retornamos nuevamente al contenido del tweet.
 
-   
+  def hashtags
+    # array con hashtags. añadir each por que o si no hace un sólo split
+    @content.split(" ").each do |word| 
+      # https://apidock.com/ruby/String/start_with%3F
+      if word.start_with?('#')
+        # Hashtag, tiene q ser link
+        # concatenate root_path to search?? https://stackoverflow.com/questions/8052532/rails-3-1-path-url-to-file-in-public-directory
+        word = link_to(word, root_path+"?utf8=✓&search_tweets=#{word}&commit=Buscar+Tweets")
+      else
+
+      end
+    end
+  end
 
   def liked?(user)
     if self.users_liked.include?(user)

@@ -5,8 +5,11 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
+
     @tweets = Tweet.all
+    
     @retweets = Retweet.all
+  
   end
 
   # Método para añadir likes
@@ -44,6 +47,7 @@ class TweetsController < ApplicationController
   # GET /tweets/1.json
   def show
   end
+
 
 
   # GET /tweets/new

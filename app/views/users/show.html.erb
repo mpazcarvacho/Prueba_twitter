@@ -1,6 +1,6 @@
 <%# USER'S PROFILE VIEW %>
 
-<div class="coontainer">
+<div>
   <div class="row">
     <div class="col-2 pl-5 mt-5">
       <%=image_tag(@user.pic_url, class:"rounded-circle profile-pic")%>
@@ -28,6 +28,10 @@
         <%else%>
           <%= link_to "Inicia sesión para seguir a #{@user}" , new_user_session_path %>
         <%end%>
+      </div>
+      <div class="row mt-5">
+        <%=pluralize(@user.total_tweets, "tweet")%>
+        
       </div>
     </div>
   </div>

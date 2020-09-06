@@ -5,9 +5,16 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :email
-    column :current_sign_in_at
-    column :sign_in_count
+    #column :current_sign_in_at
+    #column :sign_in_count
     column :created_at
+    # COLUMNAS AÑADIDAS
+    column :username
+    column :admin
+    column :following_count
+    column :total_tweets
+    column :total_likes
+    column :total_retweets
     actions
   end
 
