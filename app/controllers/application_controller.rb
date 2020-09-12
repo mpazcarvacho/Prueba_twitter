@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permited_parameters, if: :devise_controller?
 
+  
+
   def authenticate_admin!
     if current_user.nil?
       
@@ -19,6 +21,8 @@ class ApplicationController < ActionController::Base
 
   def configure_permited_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :pic_url, :admin])
+
   end
+
 
 end

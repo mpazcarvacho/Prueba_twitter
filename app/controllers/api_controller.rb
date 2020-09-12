@@ -1,4 +1,11 @@
 class ApiController < ApplicationController
+  #before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!, only: [:create]
+
+  def authenticate_user!
+    user = authenticate(params[:email], params[:password])
+  end
 
   def news
     tweets_50 = Tweet.last(50)
@@ -60,7 +67,9 @@ class ApiController < ApplicationController
   end
 
   def create_tweet
-    tweet = Tweet.new(tweet_params)
+    user = authenticate(params[:email], params[:password])
+    @tweet = Tweet.new(content: tweet_params, user_id: user)
+    
 
     if tweet.save
       render json: {status: 'SUCCESS', message: "Tweet creado", data:tweet}, status: :ok
@@ -72,7 +81,7 @@ class ApiController < ApplicationController
   private
 
   def tweet_params
-    params.permit(:content, :user_id)
+    params.permit(:content)
   end
 
 
@@ -122,3 +131,5 @@ end
 # post tweet w authentication
 # https://whatraghulearned.wordpress.com/2019/07/15/add-devise_token_auth-to-an-existing-rails-app/
 # https://www.youtube.com/watch?v=QojnRc7SS9o min 25:20 create post
+# http://perpetuum-mobile.net/tech/devise-as-authentication-solution-for-rails-api/
+# https://github.com/gonzalo-bulnes/simple_token_authentication

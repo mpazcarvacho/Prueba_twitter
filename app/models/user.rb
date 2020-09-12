@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :pic_url, format: URI::regexp(%w[http https])
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  acts_as_token_authenticatable #añadido para autenticación por api
   has_many :tweets, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :retweets, dependent: :destroy

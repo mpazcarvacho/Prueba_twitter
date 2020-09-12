@@ -21,5 +21,15 @@ Rails.application.routes.draw do
   get 'api/news'
   get 'api/:date_from/:date_to', to: 'api#dates_range'
   post 'api/tweet', to: 'api#create_tweet'
+  # post 'api/sign_in', to: 'sessions#create'
+
+
+  namespace :api, defaults: {format: :json} do
+    
+      devise_scope :user do
+        post "sign_in", to: "sessions#create"
+      end
+    
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,6 +1,8 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
   before_action :set_actual_tweet, only: [:likes, :retweets]
+  acts_as_token_authentication_handler_for User #autenticación para API
+  before_action :authenticate_user!, only: [:create]
 
   # GET /tweets
   # GET /tweets.json
