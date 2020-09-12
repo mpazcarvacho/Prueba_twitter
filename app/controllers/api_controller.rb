@@ -59,6 +59,23 @@ class ApiController < ApplicationController
     render json: tweets_hash.as_json
   end
 
+  def create_tweet
+    tweet = Tweet.new(tweet_params)
+
+    if tweet.save
+      render json: {status: 'SUCCESS', message: "Tweet creado", data:tweet}, status: :ok
+    else
+      render json: {status: 'ERROR', message: "Tweet no pudo ser creado", data:tweet.errors}, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def tweet_params
+    params.permit(:content, :user_id)
+  end
+
+
 end
 
 # ORIGINAL JSON RETURNS
@@ -101,3 +118,7 @@ end
 
 # DATES
 # https://stackoverflow.com/questions/43378640/rails-datetime-format-dd-mm-yyyy/43378808
+
+# post tweet w authentication
+# https://whatraghulearned.wordpress.com/2019/07/15/add-devise_token_auth-to-an-existing-rails-app/
+# https://www.youtube.com/watch?v=QojnRc7SS9o min 25:20 create post
