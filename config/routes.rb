@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   # RUTAS API
   get 'api/news'
+  get 'api/:date_from/:date_to', to: 'api#dates_range'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -24,7 +24,38 @@ class ApiController < ApplicationController
       }
     end
 
-    # render json: Tweet.last(50)
+    render json: tweets_hash.as_json
+  end
+
+  def dates_range
+    # formato dd-mm-yyyy
+    date_from = Date.parse(params[:date_from]).strftime("%d-%m-%Y")
+    date_to = Date.parse(params[:date_to]).strftime("%d-%m-%Y")
+
+    tweets_between_range = Tweet.where(created_at: (date_from .. date_to))
+
+    tweets_hash = tweets_between_range.map do |tweet|
+      {
+          :id => tweet.id,
+          :content => tweet.content,
+          :user_id => if tweet.rt_id?
+            # Verifica si hay referencia a retweet
+            tweet.retweeted_by_id
+          else
+            tweet.user_id
+          end,
+          :like_count => tweet.likes.count,
+          :retweets_count => tweet.retweet_count,
+          :retwitted_from => if tweet.rt_id?
+            # Verifica si hay referencia a retweet
+            tweet.user_id
+          else
+            nil
+          end,
+          :created_at => tweet.created_at
+      }
+    end
+
     render json: tweets_hash.as_json
   end
 
@@ -67,3 +98,6 @@ end
 
 # https://stackoverflow.com/questions/13017501/ruby-mapping-an-array-to-hashmap
 # https://apidock.com/rails/ActiveModel/Serializers/JSON/as_json
+
+# DATES
+# https://stackoverflow.com/questions/43378640/rails-datetime-format-dd-mm-yyyy/43378808
