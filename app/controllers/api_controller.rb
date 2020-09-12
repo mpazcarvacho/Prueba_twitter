@@ -9,7 +9,7 @@ class ApiController < ApplicationController
           :content => tweet.content,
           :user_id => if tweet.rt_id?
             # Verifica si hay referencia a retweet
-            tweet.retweeted_by
+            tweet.retweeted_by_id
           else
             tweet.user_id
           end,
@@ -17,9 +17,9 @@ class ApiController < ApplicationController
           :retweets_count => tweet.retweet_count,
           :retwitted_from => if tweet.rt_id?
             # Verifica si hay referencia a retweet
-            "SI HUBO RT"
+            tweet.user_id
           else
-            "no hubo rt"
+            nil
           end
       }
     end

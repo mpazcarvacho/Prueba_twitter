@@ -112,6 +112,12 @@ class Tweet < ApplicationRecord
     user_id = Retweet.where(tweet_id: self.id).first.user_id
     User.find(user_id).username
   end
+
+  def retweeted_by_id
+    
+    user_id = Retweet.where(tweet_id: self.id).first.user_id
+    User.find(user_id).id
+  end
 end
 
 
