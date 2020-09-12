@@ -61,4 +61,23 @@ class User < ApplicationRecord
     self.retweets.count
   end
 
+
+
+  private
+
+
+  def self.authenticate(email, password)
+    @user = User.find_for_database_authentication(email: email)
+    
+    if @user
+      if @user.valid_password?(password)
+        # sign_in "user", @user
+       return @user
+      end
+    else
+      return nil
+    end
+
+  end
+
 end

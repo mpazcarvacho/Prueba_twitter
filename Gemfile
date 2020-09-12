@@ -32,6 +32,7 @@ gem 'devise'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari' 
 gem 'activeadmin'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

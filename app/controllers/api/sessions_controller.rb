@@ -23,7 +23,7 @@ class Api::SessionsController < Devise::SessionsController
 
   private
   def sign_in_params
-    params.require(:sign_in).permit :email, :password
+    params.require(:user).permit :email, :password
   end
 
   def load_user
@@ -35,7 +35,7 @@ class Api::SessionsController < Devise::SessionsController
         messages: "Cannot get User",
         is_success: false,
         data: {}
-      }, status: :failure
+      }, status: :bad_request
     end
   end
 end
