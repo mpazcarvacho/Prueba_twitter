@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  
+
   ActiveAdmin.routes(self)
   root 'pages#index'
   get 'pages/index'
@@ -14,6 +16,9 @@ Rails.application.routes.draw do
 
   post 'follow/:user_id', to: 'friends#follow', as: 'follow'
   delete 'unfollow/:user_id', to: 'friends#unfollow', as: 'unfollow'
+
+  # RUTAS API
+  get 'api/news'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
