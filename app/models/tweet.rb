@@ -4,10 +4,10 @@ class Tweet < ApplicationRecord
   validates :content, presence: true
 
   belongs_to :user
-  has_many :likes, dependent: :delete_all
-  has_many :retweets, dependent: :delete_all
-  has_many :users_liked, :through => :likes, :source => :user, dependent: :delete_all
-  has_many :users_retweeted, :through => :retweets, :source => :user, dependent: :delete_all
+  has_many :likes, dependent: :destroy
+  has_many :retweets, dependent: :destroy
+  has_many :users_liked, :through => :likes, :source => :user, dependent: :destroy
+  has_many :users_retweeted, :through => :retweets, :source => :user, dependent: :destroy
   
 
   paginates_per 50

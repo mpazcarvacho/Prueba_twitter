@@ -1,7 +1,13 @@
 # README
 
+Correr rails db:seed para crear admin, usuarios y tweets.
+
 ADMIN USER: admin@twitty.com
 ADMIN PASS: adminpass
+
+Para ingresar a dashboard, autenticarse con usuario admin, y dirigirse a http://localhost:3000/admin/users.
+
+
 
 API:
 

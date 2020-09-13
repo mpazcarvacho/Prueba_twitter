@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   acts_as_token_authentication_handler_for User #autenticación para API
-  has_secure_password
 
   def show
     
